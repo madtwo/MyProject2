@@ -185,6 +185,6 @@ python ue.py py 'import unreal; unreal.get_editor_subsystem(unreal.LevelEditorSu
 - 仓库:**https://github.com/madtwo/MyProject2**(私有)
 - 入库内容与分类见根目录 `README.md`;标准 UE .gitignore 排除 Binaries/Intermediate/Saved/DerivedDataCache/.vs(克隆后右键 uproject 重编译即可,增量约 14s)
 - 初始提交 291 文件 / 约 130MB,无单文件 >50MB(未用 LFS)
-- **提交方式**:当时 FlClash 未开、github.com:443 与 ssh.github.com:443 均被重置,git 协议不可用;走 api.github.com REST 直传(blobs→tree→commit→ref)。**远端 commit sha 与本地 HEAD 一致**(脚本按本地 cat-file 字段原样构造),之后开代理可直接 `git push -u origin main`,不会撞历史
+- **提交方式**:当时 FlClash 未开、github.com:443 与 ssh.github.com:443 均被重置,git 协议不可用;走 api.github.com REST 直传(blobs→tree→commit→ref)。空仓库上 git-data API 会 409,先经 Contents API 放 README 引导,因此**远端历史 = 引导提交 + 全量提交,与本地历史(单根提交)内容相同但 sha 不同**。开代理后执行一次 `git fetch origin && git reset --hard origin/main` 对齐,之后正常 `git push` 即可(本地分支已设好跟踪)
 - 推送脚本固化在 `C:\Users\20625\.zcode\skills\ue-nocode\reference\push_via_api.py`;令牌读取、网络封锁面、流程坑详见 ue-nocode SKILL 的"项目同步 GitHub"章节
 - 令牌来源:Windows 凭证管理器 `GitHub - https://api.github.com/madtwo`(gh 时代的 OAuth token,repo 权限)
