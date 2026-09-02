@@ -5,7 +5,7 @@
 
 ## 0. 一句话现状
 
-C++ 插件 `GravityShiftCore` **已安装并编译通过**(修了 4 个真实 C++ 错误),原生蓝图类已生成 7 个 + 1 个安全版 `BP_GS_BlockBase`。**测试关卡还没摆好**——下一轮要做的事见第 6 节。
+C++ 插件 `GravityShiftCore` **已编译通过**(修了 4 个真实 C++ 错误);测试关卡 `测试案例.umap` **已摆好并 PIE 验收**(Manager + 三种方块 + 测试房,第 10 节);**G/R 六向重力切换与重置已修好并实测通过**(Tick 轮询方案,第 11 节);代码已同步 GitHub(第 12 节)。**下一轮工作从规范包 P04 起**(第 9 节)。第 5 节的编辑器会话快照是历史信息,接手时以实际进程为准。
 
 ## 1. 环境事实(本机,2026-09-01 验证)
 
@@ -61,6 +61,8 @@ C++ 插件 `GravityShiftCore` **已安装并编译通过**(修了 4 个真实 C+
 **还有 2 个非阻塞但要注意的**:链接器偶尔报 `LNK1201`(写不了 PDB)/`LNK1136`(lib 损坏),根因是 UBA(Unreal Build Accelerator)的文件层在 `C:\ProgramData\Epic\UnrealBuildAccelerator\` 上 `SetFileInformationByHandle Access is denied`。**加 `-NoUBA` 编译就干净通过**。不排除本机某杀软/权限在拦 UBA,但 `-NoUBA` 已规避。
 
 ## 5. 当前编辑器会话状态
+
+> 本节是 2026-09-01 第二轮的会话快照,PID/关卡状态已过时;接手时先确认编辑器是否在运行、`netstat :8000` 是否在监听,再核对当前打开的关卡。
 
 - 编辑器进程 PID 44204,窗口标题应是 `MyProject2 - 虚幻编辑器`(开之前先 `Get-Process -Id 44204 | MainWindowTitle` 核对)
 - MCP 在 8000 监听中(手动 `ModelContextProtocol.StartServer` 拉起的)
@@ -188,3 +190,4 @@ python ue.py py 'import unreal; unreal.get_editor_subsystem(unreal.LevelEditorSu
 - **提交方式**:当时 FlClash 未开、github.com:443 与 ssh.github.com:443 均被重置,git 协议不可用;走 api.github.com REST 直传(blobs→tree→commit→ref)。空仓库上 git-data API 会 409,先经 Contents API 放 README 引导,因此**远端历史 = 引导提交 + 全量提交,与本地历史(单根提交)内容相同但 sha 不同**。开代理后执行一次 `git fetch origin && git reset --hard origin/main` 对齐,之后正常 `git push` 即可(本地分支已设好跟踪)
 - 推送脚本固化在 `C:\Users\20625\.zcode\skills\ue-nocode\reference\push_via_api.py`;令牌读取、网络封锁面、流程坑详见 ue-nocode SKILL 的"项目同步 GitHub"章节
 - 令牌来源:Windows 凭证管理器 `GitHub - https://api.github.com/madtwo`(gh 时代的 OAuth token,repo 权限)
+- 最后同步位置:远端 main head `db9d68a`(= 本条 §12 的内容),与本地提交 `65d55ae` 内容逐字节一致;此后本地若无新提交,即无未推送内容
