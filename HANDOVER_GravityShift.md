@@ -190,4 +190,4 @@ python ue.py py 'import unreal; unreal.get_editor_subsystem(unreal.LevelEditorSu
 - **提交方式**:当时 FlClash 未开、github.com:443 与 ssh.github.com:443 均被重置,git 协议不可用;走 api.github.com REST 直传(blobs→tree→commit→ref)。空仓库上 git-data API 会 409,先经 Contents API 放 README 引导,因此**远端历史 = 引导提交 + 全量提交,与本地历史(单根提交)内容相同但 sha 不同**。开代理后执行一次 `git fetch origin && git reset --hard origin/main` 对齐,之后正常 `git push` 即可(本地分支已设好跟踪)
 - 推送脚本固化在 `C:\Users\20625\.zcode\skills\ue-nocode\reference\push_via_api.py`;令牌读取、网络封锁面、流程坑详见 ue-nocode SKILL 的"项目同步 GitHub"章节
 - 令牌来源:Windows 凭证管理器 `GitHub - https://api.github.com/madtwo`(gh 时代的 OAuth token,repo 权限)
-- 最后同步位置:远端 main head `db9d68a`(= 本条 §12 的内容),与本地提交 `65d55ae` 内容逐字节一致;此后本地若无新提交,即无未推送内容
+- 漏推核对(方法,不会过时):开代理后 `git fetch origin`,比较本地 `git log --oneline -1` 与 `git ls-remote origin main` 的 sha;不一致就执行上面的对齐命令(以远端为准)
