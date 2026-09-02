@@ -1,0 +1,18 @@
+# UE5 standard generated dirs
+Binaries/*
+Plugins/*/Binaries/*
+Build/*
+Intermediate/*
+Plugins/*/Intermediate/*
+Saved/*
+DerivedDataCache/*
+.vs/
+.idea/
+*.VC.db
+*.sln
+*.suo
+*.code-workspace
+
+# OS noise
+Thumbs.db
+Desktop.ini

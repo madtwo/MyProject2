@@ -1,0 +1,19 @@
+{
+  "FileVersion": 3,
+  "Version": 2,
+  "VersionName": "0.2.0",
+  "FriendlyName": "Gravity Shift Core",
+  "Description": "Reusable six-axis gravity, surface modifier, impact, breakable, resettable, block, and demo-room classes exposed to Blueprint.",
+  "Category": "Gameplay",
+  "CreatedBy": "OpenAI",
+  "CanContainContent": true,
+  "IsBetaVersion": true,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "GravityShiftCore",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}
